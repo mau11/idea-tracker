@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1><a href="/">Welcome </a></h1>
+    <main>
+      <h2>Profile Page</h2>
+
+      <a href="/logout" class="button">Logout</a>
+
+      <!-- LOCAL INFORMATION -->
+      <div>
+        <h3>Items</h3>
+        <ul>
+          <% for(var i=0; i<messages.length; i++) {%>
+            <li class="message">
+              <span><%= messages[i].name %></span>
+              <span><%= messages[i].msg %></span>
+              <span><%= messages[i].thumbUp %></span>
+            </li>
+          <% } %>
+        </ul>
+
+        <h4>Add a message</h4>
+        <% if (user.local.username) { %>
+          <form class="center" action="/messages" method="POST">
+            <input type="text" value="<%= user.local.username %>" name="name">
+            <input type="text" placeholder="message" name="msg">
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <% } %>
+      </div>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>

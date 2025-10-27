@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1><a href="/">Welcome </a></h1>
+    <main>
+      <h2>Sign up</h2>
+
+      <% if (message.length > 0) { %> <%= message %> <% } %>
+
+      <!-- LOGIN FORM -->
+      <form action="/signup" method="post">
+        <div class="form-row">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" />
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" />
+        </div>
+
+        <button type="submit">Sign up</button>
+      </form>
+
+      <hr />
+
+      <p>Already have an account? <a href="/login">Log in</a></p>
+    </main>
+  </body>
+</html>
