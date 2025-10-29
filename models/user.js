@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 // define the schema for our user model
-const userSchema = mongoose.Schema({
-  username: String,
-  password: String,
-});
+const userSchema = mongoose.Schema(
+  {
+    username: String,
+    password: String,
+  },
+  { timestamps: true }
+);
 
 // generating a hash
 userSchema.methods.generateHash = function (password) {

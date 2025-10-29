@@ -9,6 +9,9 @@
   --white: rgba(246, 246, 246, 1);
   --accent: rgba(38, 70, 144, 1);
   --accentOp: rgba(38, 70, 144, 0.7);
+  --accent2: rgba(176, 196, 222, 1);
+  --error: rgba(220, 0, 0, 1);
+  --error2: rgba(220, 20, 60, 1);
   --3d-effect: -webkit-linear-gradient(
     top,
     rgba(0, 0, 0, 0),
@@ -34,6 +37,10 @@ body {
   padding-bottom: 4em;
 }
 
+li {
+  list-style: none;
+}
+
 h1 {
   background-color: var(--accent);
   color: var(--white);
@@ -49,15 +56,18 @@ h1 a {
 }
 
 nav {
-  text-align: end;
+  display: flex;
+  justify-content: end;
+  gap: 1em;
+  align-items: center;
 }
 
 h2 {
   margin-bottom: 1em;
 }
 
-h4 {
-  font-style: italic;
+h3 > a {
+  text-decoration: none;
 }
 
 main {
@@ -66,8 +76,14 @@ main {
 
 form {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
   margin: 1em 0 2em;
+}
+
+form.list {
+  flex-direction: column;
+  margin: 1em 1em 2em;
 }
 
 form center {
@@ -81,7 +97,13 @@ form center {
   align-items: center;
 }
 
+.form-row > textarea {
+  width: 50%;
+  min-height: 80px;
+}
+
 input,
+textarea,
 select,
 button,
 .button {
@@ -121,15 +143,32 @@ button:focus,
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 6px var(--accent);
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.error {
+  font-style: italic;
+  color: var(--error);
+}
+
 .subtext {
   text-align: center;
   margin: 1em 0;
+  padding: 1em 0;
+  border-top: 1px solid var(--black);
 }
 
 .card-list {
@@ -142,8 +181,6 @@ select:focus {
 .list-card {
   display: flex;
   flex-direction: column;
-  list-style: none;
-  padding: 1.5em;
   border-radius: 0.5em;
   align-items: center;
   display: flex;
@@ -152,9 +189,63 @@ select:focus {
   background-color: white;
 }
 
+.list-card > a {
+  padding: 1.5em;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+}
+
+.list-card a > p {
+  font-style: italic;
+}
+
 .list-card:hover {
   transform: scale(1.02);
   cursor: pointer;
+}
+
+.ideas-table {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+th,
+td {
+  padding: 1em;
+  text-align: left;
+}
+
+td {
+  padding: 0.25em;
+}
+
+thead th {
+  background-color: var(--accent2);
+  font-weight: 600;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-icon {
+  color: var(--error);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-left: auto;
+}
+
+.delete-icon:hover {
+  transform: scale(1.15);
+  opacity: 0.9;
+}
+
+.delete-icon:active {
+  transform: scale(0.98);
+  opacity: 0.9;
 }
 
 @media screen and (max-width: 1024px) {

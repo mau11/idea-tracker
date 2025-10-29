@@ -8,6 +8,7 @@
     <header>
       <h1><a href="/">Idea Tracker</a></h1>
       <nav>
+        <p>Hi <%= user.username %>!</p>
         <a href="/logout" class="button">Logout</a>
       </nav>
     </header>
@@ -15,26 +16,37 @@
     <main>
       <h2>Dashboard</h2>
       <div>
+        <% if (lists.length) { %>
         <h3>My Lists</h3>
+        <% } else {%>
+          <h4>You don't have any lists, create one below:</h4>
+          <% }%>
         <ul class="card-list">
           <% for(var i=0; i<lists.length; i++) {%>
             <li class="list-card">
-              <span><%= lists[i].name %></span>
-              <span><%= lists[i].description %></span>
+              <a href="/list/<%= lists[i]._id %>">
+                <h4 class="bold"><%= lists[i].name %></h4>
+                <p><%= lists[i].description %></p>
+              </a>
             </li>
           <% } %>
         </ul>
 
         <h3>Create a new list</h3>
+        <span class="error">
+          <% if (message.length > 0) { %> <%= message %> <% } %>
+        </span>
         <form class="center" action="/list" method="POST">
           <input type="text" placeholder="Name of List" name="name" />
-          <input type="text" placeholder="Description" name="description" />
+          <input
+            type="text"
+            placeholder="Description (optional)"
+            name="description"
+          />
           <button type="submit">Submit</button>
         </form>
       </div>
     </main>
 
-    <a href="/logout" class="button">Logout</a>
-    <script src="main.js"></script>
   </body>
 </html>

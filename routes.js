@@ -1,5 +1,6 @@
 import { User } from "./models/user.js";
 import { List } from "./models/list.js";
+import { Idea } from "./models/idea.js";
 
 export default function (app, db) {
   // show the home page
@@ -10,15 +11,23 @@ export default function (app, db) {
     res.render("index.ejs");
   });
 
-  // ============= PROFILE =============
+  // ============= DASHBOARD =============
   app.get("/dashboard", isLoggedIn, async function (req, res) {
     try {
-      const lists = await db.collection("lists").find().toArray();
       const user = await User.findById(req.session.userId);
+      const lists = await db
+        .collection("lists")
+        .find({ userId: user._id })
+        .toArray();
+
+      const message = req.session.listMessage || "";
+      req.session.listMessage = null;
+      console.log(message);
 
       res.render("dashboard.ejs", {
         user,
         lists,
+        message,
       });
     } catch (err) {
       console.log(err);
@@ -55,7 +64,7 @@ export default function (app, db) {
       const user = await User.findOne({ username: username });
 
       if (!user) {
-        req.session.loginMessage = "No user found";
+        req.session.loginMessage = "User not found";
         return res.redirect("/login");
       }
 
@@ -131,28 +140,98 @@ export default function (app, db) {
     });
   });
 
-  // ============= LOGIN =============
+  // ============= LISTS =============
+
+  // create a new list
   app.post("/list", async function (req, res) {
     try {
       const { name, description } = req.body;
 
       // validate input
       if (!name) {
-        req.session.listMessage = "List name required";
+        req.session.listMessage = "Name required";
         return res.redirect("/dashboard");
       }
 
       // create list
-      const newList = new List();
-      newList.name = name;
-      newList.description = description;
+      const newList = new List({
+        name,
+        description,
+        userId: req.session.userId,
+      });
       await newList.save();
 
       res.redirect("/dashboard");
     } catch (err) {
       console.log(err);
       req.session.listMessage = "Something went wrong";
-      res.redirect("/signup");
+      res.redirect("/dashboard");
+    }
+  });
+
+  // render list view
+  app.get("/list/:id", isLoggedIn, async (req, res) => {
+    try {
+      console.log(req.params);
+      const list = await List.findOne({
+        _id: req.params.id,
+        userId: req.session.userId,
+      });
+
+      if (!list) {
+        return res.status(404).send("List not found");
+      }
+
+      const ideas = await Idea.find({ listId: list._id });
+
+      res.render("list-detail.ejs", {
+        list,
+        ideas,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error loading list");
+    }
+  });
+
+  // delete list
+  app.delete("/list/:id/delete", isLoggedIn, async (req, res) => {
+    try {
+      await Idea.deleteMany({ listId: req.params.id });
+
+      await List.findOneAndDelete({
+        _id: req.params.id,
+        userId: req.session.userId,
+      });
+
+      res.json({ success: true, message: "List deleted" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: "Error deleting list" });
+    }
+  });
+
+  // ============= IDEAS =============
+  // add idea to list
+  app.post("/list/:id/idea", isLoggedIn, async (req, res) => {
+    try {
+      const newIdea = new Idea({
+        title: req.body.title,
+        notes: req.body.notes,
+        category: req.body.category || "General",
+        status: req.body.status || "Not Started",
+        priority: req.body.priority || "Medium",
+        startDate: req.body.startDate || null,
+        completedDate: req.body.completedDate || null,
+        listId: req.params.id,
+        userId: req.session.userId,
+      });
+
+      await newIdea.save();
+      res.redirect(`/list/${req.params.id}`);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error adding idea");
     }
   });
 }

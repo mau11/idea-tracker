@@ -11,6 +11,9 @@
     <main>
       <h2>Log in</h2>
 
+      <span class="error">
+        <% if (message.length > 0) { %> <%= message %> <% } %>
+      </span>
       <form class="center" action="/login" method="post">
         <div class="form-row">
           <label for="username">Username</label>
@@ -23,8 +26,6 @@
 
         <button type="submit">Login</button>
       </form>
-
-      <hr />
 
       <p class="subtext">Need an account? <a href="/signup">Sign Up</a></p>
     </main>
