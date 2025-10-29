@@ -5,36 +5,36 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1><a href="/">Idea Tracker</a></h1>
+    <header>
+      <h1><a href="/">Idea Tracker</a></h1>
+      <nav>
+        <a href="/logout" class="button">Logout</a>
+      </nav>
+    </header>
+
     <main>
       <h2>Dashboard</h2>
-
-      <a href="/logout" class="button">Logout</a>
-
-      <!-- LOCAL INFORMATION -->
       <div>
-        <h3>Items</h3>
-        <ul>
+        <h3>My Lists</h3>
+        <ul class="card-list">
           <% for(var i=0; i<lists.length; i++) {%>
-            <li class="message">
+            <li class="list-card">
               <span><%= lists[i].name %></span>
               <span><%= lists[i].description %></span>
             </li>
           <% } %>
         </ul>
 
-        <h4>Create a new list</h4>
-        <% if (user.username) { %>
-          <form class="center" action="/list" method="POST">
-            <input type="text" placeholder="Name of List" name="name">
-            <input type="text" placeholder="Description" name="description">
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-        <% } %>
+        <h3>Create a new list</h3>
+        <form class="center" action="/list" method="POST">
+          <input type="text" placeholder="Name of List" name="name" />
+          <input type="text" placeholder="Description" name="description" />
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </main>
 
+    <a href="/logout" class="button">Logout</a>
     <script src="main.js"></script>
   </body>
 </html>

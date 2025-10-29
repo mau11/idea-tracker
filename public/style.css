@@ -7,7 +7,8 @@
 :root {
   --black: rgba(51, 51, 51, 1);
   --white: rgba(246, 246, 246, 1);
-  --accent: rgba(250, 128, 114, 1);
+  --accent: rgba(38, 70, 144, 1);
+  --accentOp: rgba(38, 70, 144, 0.7);
   --3d-effect: -webkit-linear-gradient(
     top,
     rgba(0, 0, 0, 0),
@@ -47,6 +48,14 @@ h1 a {
   color: var(--white);
 }
 
+nav {
+  text-align: end;
+}
+
+h2 {
+  margin-bottom: 1em;
+}
+
 h4 {
   font-style: italic;
 }
@@ -58,7 +67,7 @@ main {
 form {
   display: flex;
   gap: 1em;
-  margin: 2em 0;
+  margin: 1em 0 2em;
 }
 
 form center {
@@ -123,6 +132,31 @@ select:focus {
   margin: 1em 0;
 }
 
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2em;
+  margin: 1em 1em 2em;
+}
+
+.list-card {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 1.5em;
+  border-radius: 0.5em;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 0 10px var(--accentOp);
+  background-color: white;
+}
+
+.list-card:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
   body {
     max-width: 90vw;
@@ -131,6 +165,10 @@ select:focus {
   h1 {
     margin: 0 -5vw 0.25em;
     padding: 1em 5vw;
+  }
+
+  .card-list {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -141,5 +179,15 @@ select:focus {
 
   form {
     flex-direction: column;
+  }
+
+  .card-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .card-list {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
