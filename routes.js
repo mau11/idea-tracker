@@ -1,4 +1,5 @@
-import User from "./models/user.js";
+import { User } from "./models/user.js";
+import { List } from "./models/list.js";
 
 export default function (app, db) {
   // show the home page
@@ -12,12 +13,12 @@ export default function (app, db) {
   // ============= PROFILE =============
   app.get("/dashboard", isLoggedIn, async function (req, res) {
     try {
-      const messages = await db.collection("messages").find().toArray();
+      const lists = await db.collection("lists").find().toArray();
       const user = await User.findById(req.session.userId);
 
       res.render("dashboard.ejs", {
-        user: user,
-        messages: messages,
+        user,
+        lists,
       });
     } catch (err) {
       console.log(err);
@@ -128,5 +129,30 @@ export default function (app, db) {
       console.log("User has logged out");
       res.redirect("/");
     });
+  });
+
+  // ============= LOGIN =============
+  app.post("/list", async function (req, res) {
+    try {
+      const { name, description } = req.body;
+
+      // validate input
+      if (!name) {
+        req.session.listMessage = "List name required";
+        return res.redirect("/dashboard");
+      }
+
+      // create list
+      const newList = new List();
+      newList.name = name;
+      newList.description = description;
+      await newList.save();
+
+      res.redirect("/dashboard");
+    } catch (err) {
+      console.log(err);
+      req.session.listMessage = "Something went wrong";
+      res.redirect("/signup");
+    }
   });
 }
