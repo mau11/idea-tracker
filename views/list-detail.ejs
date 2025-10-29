@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard - Idea Tracker</title>
+     <script
+      src="https://kit.fontawesome.com/5ead7d1e54.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Idea Tracker</a></h1>
+      <nav class="space-between">
+        <h3><a href="/dashboard">← Back to Dashboard</a></h3>
+        <a href="/logout" class="button">Logout</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 class="list-header"><%= list.name %><i class="fa-solid fa-trash fa-2xs delete-icon"  title="Delete list" id="delete-<%=list._id%>"></i></h2>
+      <div>
+
+        <table class="ideas-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Start Date</th>
+              <th>Done</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% ideas.forEach(idea => { %>
+            <tr>
+              <td><%= idea.title %></td>
+              <td><%= idea.category %></td>
+              <td><%= idea.status %></td>
+              <td><%= idea.priority %></td>
+              <td><%= idea.startDate?.toLocaleDateString() %></td>
+              <td><%= idea.completedDate?.toLocaleDateString() %></td>
+              <td><%= idea.notes %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <h3>Add items to list</h3>
+        <form class="list center" action="/list/<%= list._id %>/idea"" method="POST">
+          <section class="form-row">
+            <input type="text" placeholder="Title" name="title" />
+            <input type="text" placeholder="Category" name="category" />
+            <input type="text" placeholder="Status" name="status" />
+          </section>
+          <section class="form-row">
+            <input type="text" placeholder="Priority" name="priority" />
+            <input type="date" placeholder="Start Date" name="startDate" />
+            <input type="date" placeholder="Completed Date" name="completedDate" />
+          </section>
+          <section class="form-row">
+            <textarea class="" placeholder="Notes" name="notes"></textarea>
+          </section>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </main>
+
+    <script src="/main.js"></script>
+  </body>
+</html>
