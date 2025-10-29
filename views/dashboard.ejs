@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Welcome</title>
+    <title>Dashboard - Idea Tracker</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1><a href="/">Welcome </a></h1>
+    <h1><a href="/">Idea Tracker</a></h1>
     <main>
       <h2>Profile Page</h2>
 
@@ -25,9 +25,9 @@
         </ul>
 
         <h4>Add a message</h4>
-        <% if (user.local.username) { %>
+        <% if (user.username) { %>
           <form class="center" action="/messages" method="POST">
-            <input type="text" value="<%= user.local.username %>" name="name">
+            <input type="text" value="<%= user.username %>" name="name">
             <input type="text" placeholder="message" name="msg">
             <button type="submit">Submit</button>
           </form>

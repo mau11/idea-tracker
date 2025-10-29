@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import User from "./models/user.js";
 
 export default function (app, db) {
@@ -11,7 +10,6 @@ export default function (app, db) {
   });
 
   // ============= PROFILE =============
-
   app.get("/dashboard", isLoggedIn, async function (req, res) {
     try {
       const messages = await db.collection("messages").find().toArray();
@@ -30,7 +28,6 @@ export default function (app, db) {
   // ============= LOGIN =============
   function isLoggedIn(req, res, next) {
     if (req.session.userId) {
-      console.log("\n\n==== IS LOGGED IN \n\n");
       return next();
     }
     res.redirect("/");
@@ -54,8 +51,7 @@ export default function (app, db) {
       }
 
       // find user
-      const user = await User.findOne({ "local.username": username });
-      console.log("\n\n==== USER FOUND\n\n");
+      const user = await User.findOne({ username: username });
 
       if (!user) {
         req.session.loginMessage = "No user found";
@@ -69,7 +65,6 @@ export default function (app, db) {
         req.session.loginMessage = "Wrong password";
         return res.redirect("/login");
       }
-      console.log("\n\n==== PWMATCH \n\n");
 
       // Create session
       req.session.userId = user._id;
@@ -101,7 +96,7 @@ export default function (app, db) {
       }
 
       // check if user exists
-      const existingUser = await User.findOne({ "local.username": username });
+      const existingUser = await User.findOne({ username });
 
       if (existingUser) {
         req.session.signupMessage = "That username is already taken";
@@ -110,10 +105,9 @@ export default function (app, db) {
 
       // create user
       const newUser = new User();
-      newUser.local.username = username;
-      newUser.local.password = newUser.generateHash(password);
+      newUser.username = username;
+      newUser.password = newUser.generateHash(password);
       await newUser.save();
-      console.log("\n\n==== USER CREATED \n\n");
 
       // auto-login after signup
       req.session.userId = newUser._id;

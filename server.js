@@ -7,8 +7,13 @@ import routes from "./routes.js";
 dotenv.config();
 const app = express();
 
-const PORT = process.env.PORT;
-const DB_URL = process.env.DB_CONNECTION_STRING + "/" + process.env.DB_NAME;
+const PORT = process.env.PORT || 8000;
+const DB_URL =
+  process.env.DB_CONNECTION_STRING +
+  "/" +
+  process.env.DB_NAME +
+  "?retryWrites=true&w=majority&appName=" +
+  process.env.DB_CLUSTER_NAME;
 const COOKIE_IN_DAYS = 1;
 
 // set up express application
