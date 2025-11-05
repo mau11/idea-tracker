@@ -9,15 +9,19 @@
 1. [Development](#development)
    1. [Installing Dependencies](#installing-dependencies)
    1. [Running the Server](#running-the-server)
+1. [View Application](#view-application)
+1. [Deployment](#Deployment)
 
 ## Tech Stack
 
 - **JavaScript**
+- **CSS**
 - **EJS**
 - **Node.js**
 - **Express**
 - **MongoDB**
 - **Mongoose**
+- **Render**
 
 ## Requirements
 
@@ -32,11 +36,19 @@ Setup up a [MongoDB Atlas account](https://www.mongodb.com/). Create a new datab
 
 #### Environment Variables
 
-Copy environment variables from example and save to .env
+Run the command below to copy environment variables from the example, then add your values and save.
 
 ```sh
 $ cp .env.example .env
 ```
+
+| Environment Variable | Notes                                                                                                                                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PORT                 | port number (default: 3000)                                                                                                                           |
+| DB_CONNECTION_STRING | MongoDB connection string in the format: `mongodb+srv://myDatabaseUser:D1fficultP%40ssw0rd@cluster0.example.mongodb.net/?retryWrites=true&w=majority` |
+| DB_NAME              | MongoDB database name                                                                                                                                 |
+| DB_CLUSTER_NAME      | MongoDB Atlas cluster name                                                                                                                            |
+| SESSION_SECRET       | Any randomly generated text to be used for hashing credentials                                                                                        |
 
 #### Installing Dependencies
 
@@ -52,3 +64,15 @@ Once dependencies are installed, run the following command to start the developm
 ```sh
 $ pnpm dev
 ```
+
+## View Application
+
+For development, in your browser, navigate to:
+
+```sh
+http://localhost:8000
+```
+
+## Deployment
+
+View the latest deploy on Render at: https://idea-tracker-179p.onrender.com
