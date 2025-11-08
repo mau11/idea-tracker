@@ -171,7 +171,6 @@ export default function (app, db) {
   // render list view
   app.get("/list/:id", isLoggedIn, async (req, res) => {
     try {
-      console.log(req.params);
       const list = await List.findOne({
         _id: req.params.id,
         userId: req.session.userId,
@@ -231,6 +230,21 @@ export default function (app, db) {
     } catch (err) {
       console.error(err);
       res.status(500).send("Error adding idea");
+    }
+  });
+
+  // delete idea
+  app.delete("/idea/:id/delete", isLoggedIn, async (req, res) => {
+    try {
+      await Idea.findOneAndDelete({
+        _id: req.params.id,
+        userId: req.session.userId,
+      });
+
+      res.json({ success: true, message: "Idea deleted" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: "Error deleting idea" });
     }
   });
 }

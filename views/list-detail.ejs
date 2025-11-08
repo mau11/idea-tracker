@@ -48,6 +48,7 @@
           <section class="ideas-grid">
             <% ideas.forEach(idea => { %>
               <article class="idea-card">
+                <i class="fa-solid fa-circle-xmark delete-icon idea" title="Delete idea" id="delete-<%=idea._id%>"></i>
                 <div class="idea-header">
                   <h4><%= idea.title %></h4>
                   <span class="badge <%= idea.priority.toLowerCase() %>"><%= idea.priority %></span>
