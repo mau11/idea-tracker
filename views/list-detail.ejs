@@ -2,71 +2,111 @@
 <html>
   <head>
     <title>Dashboard - Idea Tracker</title>
-     <script
-      src="https://kit.fontawesome.com/5ead7d1e54.js"
-      crossorigin="anonymous"
-    ></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <header>
       <h1><a href="/">Idea Tracker</a></h1>
       <nav class="space-between">
-        <h3><a href="/dashboard">← Back to Dashboard</a></h3>
+        <h3>
+          <a href="/dashboard">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+          </a>
+        </h3>
         <a href="/logout" class="button">Logout</a>
       </nav>
     </header>
-
+    
     <main>
-      <h2 class="list-header"><%= list.name %><i class="fa-solid fa-trash fa-2xs delete-icon"  title="Delete list" id="delete-<%=list._id%>"></i></h2>
-      <div>
+      <h2><%= list.name %></h2>
 
-        <table class="ideas-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Status</th>
-              <th>Priority</th>
-              <th>Start Date</th>
-              <th>Done</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
+      <h3>Add items to list</h3>
+      <form class="list" action="/list/<%= list._id %>/idea"" method="POST">
+        <section class="form-row">
+          <input type="text" placeholder="Title" name="title" required />
+          <input type="text" placeholder="Category" name="category" />
+          <input type="text" placeholder="Status" name="status" />
+        </section>
+        <section class="form-row">
+          <input type="text" placeholder="Priority" name="priority" />
+          <input type="date" placeholder="Start Date" name="startDate" />
+          <input type="date" placeholder="Completed Date" name="completedDate" />
+        </section>
+        <section class="form-row">
+          <textarea class="" placeholder="Notes" name="notes"></textarea>
+        </section>
+        <button type="submit">Submit</button>
+      </form>
+
+      <section class="ideas-wrapper">
+        <% if (ideas.length === 0) { %>
+          <h4 class="italic">You don't have any items on this list yet <i class="fa-regular fa-face-frown"></i></h4>
+        <% } else { %>
+          <section class="ideas-grid">
             <% ideas.forEach(idea => { %>
-            <tr>
-              <td><%= idea.title %></td>
-              <td><%= idea.category %></td>
-              <td><%= idea.status %></td>
-              <td><%= idea.priority %></td>
-              <td><%= idea.startDate?.toLocaleDateString() %></td>
-              <td><%= idea.completedDate?.toLocaleDateString() %></td>
-              <td><%= idea.notes %></td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
+              <article class="idea-card">
+                <div class="idea-header">
+                  <h4><%= idea.title %></h4>
+                  <span class="badge <%= idea.priority.toLowerCase() %>"><%= idea.priority %></span>
+                </div>
+                
+                <section class="idea-data">
+                  <div class="item">
+                    <span class="label">Category:</span>
+                    <span><%= idea.category %></span>
+                  </div>
 
-        <h3>Add items to list</h3>
-        <form class="list center" action="/list/<%= list._id %>/idea"" method="POST">
-          <section class="form-row">
-            <input type="text" placeholder="Title" name="title" />
-            <input type="text" placeholder="Category" name="category" />
-            <input type="text" placeholder="Status" name="status" />
-          </section>
-          <section class="form-row">
-            <input type="text" placeholder="Priority" name="priority" />
-            <input type="date" placeholder="Start Date" name="startDate" />
-            <input type="date" placeholder="Completed Date" name="completedDate" />
-          </section>
-          <section class="form-row">
-            <textarea class="" placeholder="Notes" name="notes"></textarea>
-          </section>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+                  <div class="item">
+                    <span class="label">Status:</span>
+                    <span><%= idea.status %></span>
+                  </div>
+
+                  <div class="item">
+                    <span class="label">Start Date:</span>
+                    <span><%= idea.startDate?.toLocaleDateString() || 'Not set' %></span>
+                  </div>
+
+                  <% if (idea.completedDate) { %>
+                  <div class="item">
+                    <span class="label">Completed:</span>
+                    <span><%= idea.completedDate.toLocaleDateString() %></span>
+                  </div>
+                  <% } %>
+                </section>
+                
+                <% if (idea.notes) { %>
+                <div class="idea-notes">
+                  <p class="label">Notes:</p>
+                  <p><%= idea.notes %></p>
+                </div>
+                <% } %>
+              </article>
+            <% }) %>
+            </section>
+        <% } %>
+      </section>
     </main>
+
+    <footer>
+      <a
+        href="https://github.com/mau11/idea-tracker"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Visit Idea Tracker GitHub Repository"
+      >
+        <p>
+          <span>&copy; 2025 Idea Tracker.</span>
+          <span>All rights reserved.</span>
+          <span class="github">
+            Created by Mau
+            <img src="/images/github-mark.png" alt="GitHub Logo" />
+          </span>
+        </p>
+      </a>
+    </footer>
 
     <script src="/main.js"></script>
   </body>

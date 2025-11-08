@@ -75,4 +75,8 @@ http://localhost:8000
 
 ## Deployment
 
-View the latest deploy on Render at: https://idea-tracker-179p.onrender.com
+View the latest deploy on Render at: https://idea-tracker-179p.onrender.com. Sign up for a new account or use credentials below.
+
+**username**: test
+
+**password**: password

@@ -22,7 +22,6 @@ export default function (app, db) {
 
       const message = req.session.listMessage || "";
       req.session.listMessage = null;
-      console.log(message);
 
       res.render("dashboard.ejs", {
         user,

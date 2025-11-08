@@ -2,7 +2,10 @@
 <html>
   <head>
     <title>Dashboard - Idea Tracker</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <header>
@@ -15,15 +18,31 @@
 
     <main>
       <h2>Dashboard</h2>
+
+      <h3>Create a new list</h3>
+      <span class="error">
+        <% if (message.length > 0) { %> <%= message %> <% } %>
+      </span>
+      <form class="center" action="/list" method="POST">
+        <input type="text" placeholder="Name of List" name="name" required />
+        <input
+          type="text"
+          placeholder="Description (optional)"
+          name="description"
+        />
+        <button type="submit">Create</button>
+      </form>
+
       <div>
         <% if (lists.length) { %>
         <h3>My Lists</h3>
         <% } else {%>
-          <h4>You don't have any lists, create one below:</h4>
-          <% }%>
-        <ul class="card-list">
-          <% for(var i=0; i<lists.length; i++) {%>
-            <li class="list-card">
+          <h4 class="italic">You don't have any lists yet <i class="fa-regular fa-face-frown"></i></h4>
+        <% }%>
+        <ul class="grid dashboard">
+          <% for(let i=0; i<lists.length; i++) {%>
+            <li class="card dashboard">
+              <i class="fa-solid fa-circle-xmark delete-icon" title="Delete list" id="delete-<%=lists[i]._id%>"></i>
               <a href="/list/<%= lists[i]._id %>">
                 <h4 class="bold"><%= lists[i].name %></h4>
                 <p><%= lists[i].description %></p>
@@ -31,22 +50,27 @@
             </li>
           <% } %>
         </ul>
-
-        <h3>Create a new list</h3>
-        <span class="error">
-          <% if (message.length > 0) { %> <%= message %> <% } %>
-        </span>
-        <form class="center" action="/list" method="POST">
-          <input type="text" placeholder="Name of List" name="name" />
-          <input
-            type="text"
-            placeholder="Description (optional)"
-            name="description"
-          />
-          <button type="submit">Submit</button>
-        </form>
       </div>
     </main>
 
+    <footer>
+      <a
+        href="https://github.com/mau11/idea-tracker"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Visit Idea Tracker GitHub Repository"
+      >
+        <p>
+          <span>&copy; 2025 Idea Tracker.</span>
+          <span>All rights reserved.</span>
+          <span class="github">
+            Created by Mau
+            <img src="/images/github-mark.png" alt="GitHub Logo" />
+          </span>
+        </p>
+      </a>
+    </footer>
+
+    <script src="/main.js"></script>
   </body>
 </html>

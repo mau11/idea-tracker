@@ -1,17 +1,21 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
 :root {
   --black: rgba(51, 51, 51, 1);
-  --white: rgba(246, 246, 246, 1);
+  --blackOp: rgba(0, 0, 0, 0.2);
   --accent: rgba(38, 70, 144, 1);
-  --accentOp: rgba(38, 70, 144, 0.7);
   --accent2: rgba(176, 196, 222, 1);
-  --error: rgba(220, 0, 0, 1);
-  --error2: rgba(220, 20, 60, 1);
+  --white: rgba(246, 246, 246, 1);
+  --grey: rgba(102, 102, 102, 1);
+
+  --lightgreen: rgba(238, 255, 238, 1);
+  --green: rgba(0, 102, 0, 1);
+
+  --lightgold: rgba(255, 255, 204, 1);
+  --gold: rgba(136, 102, 0, 1);
+
+  --lightred: rgba(255, 238, 238, 1);
+  --red: rgba(204, 0, 0, 1);
+
+  --error: rgba(220, 20, 60, 1);
   --3d-effect: -webkit-linear-gradient(
     top,
     rgba(0, 0, 0, 0),
@@ -24,9 +28,12 @@
   padding: 0;
   margin: 0;
   font-weight: unset;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   letter-spacing: 0.4px;
   color: var(--black);
+}
+
+*:not([class^="fa"]) {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 body {
@@ -34,7 +41,10 @@ body {
   margin: auto;
   color: var(--black);
   background-color: var(--white);
-  padding-bottom: 4em;
+}
+
+header {
+  margin-bottom: 2em;
 }
 
 li {
@@ -84,11 +94,7 @@ form {
 form.list {
   flex-direction: column;
   margin: 1em 1em 2em;
-}
-
-form center {
-  justify-content: center;
-  align-items: center;
+  gap: 0.75em;
 }
 
 .form-row {
@@ -129,6 +135,8 @@ button,
   background-image: var(--3d-effect);
   text-decoration: none;
   width: max-content;
+  min-width: 100px;
+  justify-content: center;
 }
 
 button:hover,
@@ -150,6 +158,10 @@ textarea:focus {
   box-shadow: 0 0 6px var(--accent);
 }
 
+.italic {
+  font-style: italic;
+}
+
 .space-between {
   display: flex;
   justify-content: space-between;
@@ -168,69 +180,69 @@ textarea:focus {
   text-align: center;
   margin: 1em 0;
   padding: 1em 0;
-  border-top: 1px solid var(--black);
+  border-top: 0.5px solid var(--black);
 }
 
-.card-list {
+.grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3em;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  .card {
+    text-align: center;
+    padding: 2em;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 10px var(--blackOp);
+  }
+
+  h4 {
+    margin-bottom: 0.5em;
+    color: var(--accent);
+  }
+}
+
+.login-buttons {
+  margin-top: 2em;
+  display: flex;
   gap: 2em;
+  justify-content: center;
+}
+
+.dashboard.grid {
   margin: 1em 1em 2em;
+  grid-template-columns: repeat(4, 1fr);
+
+  .card {
+    display: flex;
+    padding: 0;
+    position: relative;
+    align-items: center;
+  }
+
+  .card > a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5em;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card a > p {
+    font-style: italic;
+  }
+
+  .card:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
 }
 
-.list-card {
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.5em;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  box-shadow: 0 0 10px var(--accentOp);
-  background-color: white;
-}
-
-.list-card > a {
-  padding: 1.5em;
-  text-decoration: none;
-  width: 100%;
-  height: 100%;
-}
-
-.list-card a > p {
-  font-style: italic;
-}
-
-.list-card:hover {
-  transform: scale(1.02);
-  cursor: pointer;
-}
-
-.ideas-table {
-  width: 100%;
-  margin-bottom: 2em;
-}
-
-th,
-td {
-  padding: 1em;
-  text-align: left;
-}
-
-td {
-  padding: 0.25em;
-}
-
-thead th {
-  background-color: var(--accent2);
-  font-weight: 600;
-}
-
-.list-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* FONTAWESOME ICONS */
 .delete-icon {
   color: var(--error);
   cursor: pointer;
@@ -245,7 +257,134 @@ thead th {
 
 .delete-icon:active {
   transform: scale(0.98);
-  opacity: 0.9;
+}
+
+.fa-face-frown,
+.fa-arrow-left,
+.fa-circle-xmark {
+  color: var(--accent);
+}
+
+.fa-circle-xmark {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
+
+/* IDEAS CARDS */
+.ideas-wrapper {
+  margin-bottom: 2em;
+
+  .ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5em;
+  }
+
+  .idea-card {
+    border: 1px solid var(--blackOp);
+    border-radius: 8px;
+    padding: 1.5em;
+    background: white;
+    box-shadow: 0 2px 10px var(--blackOp);
+  }
+
+  .idea-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1em;
+    padding-bottom: 0.75em;
+    border-bottom: 1px solid var(--accent2);
+  }
+
+  .idea-header h4 {
+    margin: 0;
+    color: var(--accent);
+  }
+
+  .badge {
+    padding: 0.25em 0.75em;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-weight: 600;
+  }
+
+  .badge.low {
+    background-color: var(--lightgreen);
+    color: var(--green);
+  }
+
+  .badge.medium {
+    background-color: var(--lightgold);
+    color: var(--gold);
+  }
+
+  .badge.high {
+    background-color: var(--lightred);
+    color: var(--red);
+  }
+
+  .idea-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-bottom: 1em;
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
+  .label {
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  .idea-notes {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid var(--accent2);
+  }
+
+  .idea-notes p {
+    margin-top: 0.5em;
+    font-style: italic;
+    color: var(--grey);
+  }
+}
+
+/* FOOTER */
+footer {
+  display: flex;
+  justify-content: end;
+  margin-left: -10vw;
+  width: calc(100% + 15vw);
+
+  a {
+    text-decoration: none;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 4px;
+    margin: 2em 0;
+  }
+
+  .github {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+
+  img {
+    width: 20px;
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -261,24 +400,101 @@ thead th {
   .card-list {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .dashboard.grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75em;
+  }
+
+  footer {
+    margin-left: unset;
+    width: unset;
+
+    a {
+      margin-right: 2em;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
   main {
-    margin: 2em 0;
+    margin-right: 2em;
   }
 
   form {
     flex-direction: column;
   }
 
+  .feature-grid {
+    grid-template-columns: 1fr;
+    max-width: 425px;
+    gap: 1.5em;
+  }
+
   .card-list {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard.grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5em;
+  }
+
+  footer {
+    font-size: 0.9em;
+    justify-content: center;
+
+    a {
+      margin-right: 0;
+    }
   }
 }
 
 @media screen and (max-width: 576px) {
-  .card-list {
+  main {
+    margin: 1em;
+  }
+
+  form {
+    margin: 0.5em 0 2em;
+  }
+
+  form.center {
+    align-items: center;
+  }
+
+  form.list {
+    margin: 1em 0;
+
+    input,
+    textarea {
+      width: 100%;
+    }
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0.75em;
+  }
+
+  .grid {
     grid-template-columns: repeat(1, 1fr);
+    gap: 1.5em;
+  }
+
+  .card-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .subtext {
+    margin-bottom: 2em;
+  }
+
+  .ideas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  footer p {
+    display: inline-block;
   }
 }

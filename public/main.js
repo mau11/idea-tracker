@@ -1,4 +1,6 @@
-document.querySelector(".delete-icon").onclick = handleDelete;
+document.querySelectorAll(".delete-icon").forEach((icon) => {
+  icon.addEventListener("click", handleDelete);
+});
 
 function handleDelete(e) {
   if (!confirm("Are you sure you want to delete this list?")) {

@@ -19,7 +19,7 @@ const COOKIE_IN_DAYS = 1;
 // set up express application
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public")); // serve js/css files
+app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 // create a session
