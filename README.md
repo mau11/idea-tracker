@@ -2,6 +2,8 @@
 
 > Log in to create lists of ideas and track their status.
 
+<img src="./public/images/screenshot.png" alt="Screenshot of completed Idea Tracker app" height="300">
+
 ## Table of Contents
 
 1. [Tech Stack](#tech-stack)

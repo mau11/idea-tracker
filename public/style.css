@@ -426,6 +426,10 @@ footer {
     flex-direction: column;
   }
 
+  .grid {
+    gap: 1em;
+  }
+
   .feature-grid {
     grid-template-columns: 1fr;
     max-width: 425px;
